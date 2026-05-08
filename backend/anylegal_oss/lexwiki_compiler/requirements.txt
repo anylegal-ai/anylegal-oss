@@ -1,0 +1,13 @@
+# LexWiki compiler sidecar — minimal Python deps for the slices of
+# anylegal_oss the sidecar imports (utils/encryption.py needs `cryptography`
+# for at-rest encryption; runner.py uses `python-dotenv` to load .env).
+#
+# Note: this file is informational. The OSS docker-compose stack actually
+# builds the lexwiki-compiler service from the same image as the main
+# backend (see docker-compose.yml), which installs from
+# backend/requirements.txt — that file pins `lexwiki @ git+…@v0.1.0`,
+# so the compiler's deferred `from lexwiki.compile.compiler import …`
+# imports work out of the box. Runner verifies the import at boot and
+# self-disables cleanly if it ever fails.
+cryptography>=41
+python-dotenv>=1.0

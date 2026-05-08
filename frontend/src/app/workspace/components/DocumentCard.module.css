@@ -1,0 +1,152 @@
+/* DocumentCard - Display workspace documents with DOCX metadata */
+
+.card {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 8px;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.card:hover {
+  background: #f9fafb;
+  border-color: #d1d5db;
+}
+
+.card:focus {
+  outline: none;
+  border-color: #0099FF;
+  box-shadow: 0 0 0 2px rgba(0, 153, 255, 0.15);
+}
+
+.cardActive {
+  background: #eff6ff;
+  border-color: #0099FF;
+}
+
+/* Format Icon */
+.formatIcon {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  background: #f3f4f6;
+  color: #6b7280;
+}
+
+.docxIcon {
+  background: #dbeafe;
+  color: #2563eb;
+}
+
+.htmlIcon {
+  background: #fef3c7;
+  color: #d97706;
+}
+
+/* Content */
+.content {
+  flex: 1;
+  min-width: 0;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.fileName {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #1f2937;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.syncBadge {
+  flex-shrink: 0;
+  font-size: 0.65rem;
+  font-weight: 500;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: #fef3c7;
+  color: #b45309;
+}
+
+.syncBadgeSynced {
+  flex-shrink: 0;
+  font-size: 0.65rem;
+  font-weight: 500;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: #dcfce7;
+  color: #166534;
+}
+
+.description {
+  font-size: 0.75rem;
+  color: #6b7280;
+  margin: 0 0 6px 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.7rem;
+  color: #9ca3af;
+}
+
+.format {
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.modified {
+  color: #9ca3af;
+}
+
+/* Export Button */
+.exportBtn {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  background: transparent;
+  border: 1px solid transparent;
+  color: #6b7280;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  opacity: 0;
+}
+
+.card:hover .exportBtn {
+  opacity: 1;
+}
+
+.exportBtn:hover {
+  background: #f3f4f6;
+  border-color: #e5e7eb;
+  color: #2563eb;
+}
+
+.exportBtn:active {
+  background: #e5e7eb;
+}

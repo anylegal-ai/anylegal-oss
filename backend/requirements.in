@@ -1,0 +1,54 @@
+# AnyLegal OSS — backend Python deps (curated).
+#
+# Mirror of requirements.txt with comments grouped by concern. We keep
+# them in sync manually — no pip-compile in the OSS release path.
+
+# HTTP / API framework
+fastapi>=0.110
+uvicorn[standard]>=0.29
+python-multipart  # FastAPI File/Form peer dep
+
+# Async / data
+httpx>=0.25.0
+pydantic
+pyyaml>=6.0
+python-dotenv
+numpy
+
+# Validation / security
+defusedxml>=0.7.0
+cryptography
+bcrypt
+markdown
+
+# LLM API client
+openai
+
+# Document I/O
+python-docx>=0.8.11
+docx-revisions>=0.1.3
+mammoth>=1.6.0
+htmldocx
+openpyxl>=3.1.0
+python-pptx>=0.6.21
+pymupdf4llm>=0.0.25
+lxml
+
+# Diff engine
+diff-match-patch>=20230430
+
+# HTTP fetch + search
+requests
+ddgs
+
+# LexWiki compiler — the workspace knowledge-base sidecar imports it
+# lazily. Installed from GitHub (not yet on PyPI). Pin a tag so OSS users
+# get a known-good combination; bump explicitly when a new release lands.
+lexwiki @ git+https://github.com/wouldbe12/lexwiki@v0.1.0
+
+# Runtime
+psutil
+
+# Testing
+pytest
+pytest-asyncio>=0.23

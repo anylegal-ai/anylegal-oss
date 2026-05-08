@@ -1,0 +1,40 @@
+# Git
+.git/
+.gitignore
+
+# Environment
+.env
+.env.local
+.env.production
+.env.*
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+.pytest_cache/
+
+# Node.js
+node_modules/
+.next/
+out/
+
+# IDE
+.idea/
+.vscode/
+.cursor/
+.claude/
+
+# Logs and runtime
+*.log
+*.pid
+logs/
+.tmp_*
+
+# Docs (don't bake into images)
+docs/
+examples/
+*.md
+!README.md

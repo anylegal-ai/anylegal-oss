@@ -1,0 +1,63 @@
+# Environment — gitignore real env files but ship the templates
+.env
+.env.local
+.env.production
+.env.*
+!.env.example
+!*.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv/
+venv/
+ENV/
+env/
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+build/
+dist/
+*.egg
+
+# Node.js
+node_modules/
+.next/
+out/
+.cache/
+*.tsbuildinfo
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# IDE
+.idea/
+.vscode/
+.cursor/
+.cursorignore
+.cursorrules
+.claude/
+*.code-workspace
+
+# Logs and runtime
+*.log
+*.pid
+logs/
+anylegal_sessions/
+.tmp_*
+
+# Local data (generated)
+data/
+backend/data/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# AI tool artifacts
+.continue/

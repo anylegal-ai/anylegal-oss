@@ -1,0 +1,23 @@
+.env
+*.env
+__pycache__/
+*.pyc
+*.pyo
+docling_env/
+venv/
+.venv/
+logs/
+data/
+models/
+*.db
+*.sqlite
+.env.local
+.claude/
+
+# Runtime / dev artifacts
+*.log
+*.pid
+test_results.txt
+final_test_run.txt
+full_test_report.txt
+anylegal_sessions/

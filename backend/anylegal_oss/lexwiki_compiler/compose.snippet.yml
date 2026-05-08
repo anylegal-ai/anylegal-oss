@@ -1,0 +1,23 @@
+# Append this service block to your docker-compose.yml
+#
+# (not a standalone compose file — the *defaults anchor and the uael-network
+# come from the existing stack, mirroring observer's pattern)
+
+  lexwiki-compiler:
+    <<: *defaults
+    container_name: lexwiki-compiler
+    image: anylegal-lexwiki-compiler:20260428
+    networks: [uael-network]
+    restart: unless-stopped
+    init: true
+    mem_limit: 1g
+    env_file: ./env/lexwiki-compiler.env
+    volumes:
+      # Read-write — writes only to the workspace_wikis table.
+      - ./data/db:./data/db
+      # Heartbeat + last_run.json (matches observer pattern).
+      - ./logs/lexwiki:/app/state
+      # Per-workspace scratch (decrypted source docs, wiped per run).
+      # Backed by tmpfs would be ideal; bind-mount is fine on the
+      - ./lexwiki-cache:/app/scratch
+    command: ["python", "-m", "anylegal_oss.lexwiki_compiler.runner", "--loop"]

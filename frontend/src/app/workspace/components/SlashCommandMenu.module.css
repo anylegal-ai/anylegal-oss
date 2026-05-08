@@ -1,0 +1,139 @@
+/* Slash Command Menu */
+.menu {
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+  right: 0;
+  margin-bottom: 8px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.12);
+  overflow: hidden;
+  z-index: 100;
+  max-height: 320px;
+  overflow-y: auto;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 14px;
+  border-bottom: 1px solid #e2e8f0;
+  background: #f8fafc;
+}
+
+.headerTitle {
+  font-size: 12px;
+  font-weight: 600;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.headerHint {
+  font-size: 11px;
+  color: #94a3b8;
+}
+
+.list {
+  padding: 6px;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 10px 12px;
+  border: none;
+  background: transparent;
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.1s;
+}
+
+.item:hover,
+.itemSelected {
+  background: #f1f5f9;
+}
+
+.itemIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: #f1f5f9;
+  border-radius: 8px;
+  color: #0099ff;
+  flex-shrink: 0;
+}
+
+.itemSelected .itemIcon {
+  background: #e0f2fe;
+}
+
+.itemContent {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.itemName {
+  font-size: 14px;
+  font-weight: 600;
+  color: #0f172a;
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+}
+
+.itemDescription {
+  font-size: 12px;
+  color: #64748b;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Dark mode support for workspace */
+:global(.dark) .menu {
+  background: #1e293b;
+  border-color: #334155;
+}
+
+:global(.dark) .header {
+  background: #0f172a;
+  border-color: #334155;
+}
+
+:global(.dark) .headerTitle {
+  color: #94a3b8;
+}
+
+:global(.dark) .headerHint {
+  color: #64748b;
+}
+
+:global(.dark) .item:hover,
+:global(.dark) .itemSelected {
+  background: #334155;
+}
+
+:global(.dark) .itemIcon {
+  background: #334155;
+}
+
+:global(.dark) .itemSelected .itemIcon {
+  background: #1e40af;
+}
+
+:global(.dark) .itemName {
+  color: #f1f5f9;
+}
+
+:global(.dark) .itemDescription {
+  color: #94a3b8;
+}

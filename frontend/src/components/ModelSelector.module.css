@@ -1,0 +1,312 @@
+.container {
+  background: #fff;
+  border-radius: 0;
+  padding: 0;
+  border: none;
+}
+
+.tierRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.tierLabel {
+  font-size: 0.85rem;
+  color: #374151;
+}
+
+.tierBadge {
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 4px 10px;
+  border-radius: 4px;
+  background: #0ea5e9;
+  color: #fff;
+}
+
+.loading {
+  text-align: center;
+  padding: 40px;
+  color: #6b7280;
+}
+
+.error {
+  background: #fef2f2;
+  color: #dc2626;
+  padding: 10px 14px;
+  border-radius: 6px;
+  margin-bottom: 16px;
+  font-size: 0.85rem;
+  border: 1px solid #fecaca;
+}
+
+.success {
+  background: #f0fdf4;
+  color: #16a34a;
+  padding: 10px 14px;
+  border-radius: 6px;
+  margin-bottom: 16px;
+  font-size: 0.85rem;
+  border: 1px solid #bbf7d0;
+}
+
+/* Model Groups */
+.modelGroup {
+  margin-bottom: 16px;
+}
+
+.groupHeader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.groupIcon {
+  width: 18px;
+  height: 18px;
+  color: #0ea5e9;
+  flex-shrink: 0;
+}
+
+.groupIcon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.groupTitle {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #111;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.groupNote {
+  font-size: 0.7rem;
+  color: #9ca3af;
+  margin-left: auto;
+}
+
+/* Model Cards */
+.modelList {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.modelCard {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 10px 14px;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  text-align: left;
+}
+
+.modelCard:hover:not(:disabled) {
+  background: #f8fafc;
+  border-color: #0ea5e9;
+}
+
+.modelCard.selected {
+  background: #f0f9ff;
+  border-color: #0ea5e9;
+  border-width: 2px;
+}
+
+.modelCard.locked {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.modelCard.locked:hover {
+  background: #fff;
+  border-color: #e5e7eb;
+}
+
+.modelHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modelName {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #111;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.lockIcon {
+  font-size: 0.65rem;
+  color: #9ca3af;
+  font-weight: 400;
+  text-transform: uppercase;
+  padding: 2px 6px;
+  background: #f3f4f6;
+  border-radius: 3px;
+}
+
+.checkmark {
+  width: 20px;
+  height: 20px;
+  color: #0ea5e9;
+  flex-shrink: 0;
+}
+
+.checkmark svg {
+  width: 100%;
+  height: 100%;
+}
+
+.modelMeta {
+  display: flex;
+  gap: 16px;
+  font-size: 0.8rem;
+}
+
+.modelCost {
+  font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+  color: #0ea5e9;
+  font-weight: 500;
+}
+
+.modelContext {
+  color: #9ca3af;
+}
+
+/* Other Models Section (Collapsible) */
+.otherModelsSection {
+  margin-bottom: 16px;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.otherModelsToggle {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 14px;
+  background: #f8fafc;
+  border: none;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #374151;
+  transition: background 0.15s ease;
+}
+
+.otherModelsToggle:hover {
+  background: #f1f5f9;
+}
+
+.otherModelsToggle.expanded {
+  background: #f1f5f9;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.chevron {
+  width: 18px;
+  height: 18px;
+  color: #6b7280;
+  transition: transform 0.2s ease;
+}
+
+.chevron svg {
+  width: 100%;
+  height: 100%;
+}
+
+.otherModelsToggle.expanded .chevron {
+  transform: rotate(180deg);
+}
+
+.otherModelsList {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  background: #fff;
+}
+
+/* Privacy Box */
+.privacyBox {
+  background: #f8fafc;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  padding: 12px;
+}
+
+.privacyHeader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.privacyIcon {
+  width: 18px;
+  height: 18px;
+  color: #0ea5e9;
+  flex-shrink: 0;
+}
+
+.privacyIcon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.privacyTitle {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #0ea5e9;
+}
+
+.privacyText {
+  font-size: 0.75rem;
+  color: #374151;
+  margin: 0 0 8px 0;
+  line-height: 1.4;
+}
+
+.privacyList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.privacyList li {
+  font-size: 0.75rem;
+  color: #374151;
+  padding-left: 14px;
+  position: relative;
+}
+
+.privacyList li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 5px;
+  width: 5px;
+  height: 5px;
+  background: #0ea5e9;
+  border-radius: 50%;
+}

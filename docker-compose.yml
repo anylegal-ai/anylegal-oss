@@ -1,0 +1,82 @@
+# AnyLegal OSS — docker-compose.
+#
+#   docker compose up
+#
+# Then open http://localhost:3000
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    environment:
+      - LIBREOFFICE_SERVICE_URL=http://libreoffice-service:8002
+      - DATABASE_PATH=/app/data/anylegal_oss.db
+      - LOG_FILE_PATH=/app/logs/anylegal_oss.log
+      # `run_code` writes the per-call scratch dir into SANDBOX_TMPDIR and
+      # then asks the host's docker daemon to bind-mount it into the
+      # sandbox container. Because the daemon resolves bind-source paths
+      # against the *host* filesystem, the backend must write to a path
+      # that's identical on both sides — see the /tmp bind below.
+      - SANDBOX_TMPDIR=/tmp
+    volumes:
+      - ./data:/app/data
+      - ./logs:/app/logs
+      # docker.sock + /tmp together let the `run_code` tool launch the
+      # anylegal-sandbox:latest container on the host's daemon and pass
+      # per-call scratch files into it. Single-tenant OSS only — see
+      # README "Optional — build the Python sandbox" for the security
+      # framing. Comment both lines to disable run_code.
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /tmp:/tmp
+    depends_on:
+      - libreoffice-service
+    restart: "no"
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        # NEXT_PUBLIC_* must be passed as build args; Next.js inlines them
+        # into the client bundle at `npm run build` time.
+        NEXT_PUBLIC_BASE_URL: ${NEXT_PUBLIC_BASE_URL:-http://localhost:8000}
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+    depends_on:
+      - backend
+    restart: "no"
+
+  libreoffice-service:
+    build:
+      context: ./libreoffice-service
+      dockerfile: Dockerfile
+    expose:
+      - "8002"
+    restart: "no"
+
+  # Optional: lexwiki-compiler sidecar — async wiki compilation.
+  # Comment out this service to disable wiki compilation; readers
+  # of the workspace_wikis table will see no compiled wikis but
+  # the rest of the app continues to work.
+  lexwiki-compiler:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    command: ["python", "-m", "anylegal_oss.lexwiki_compiler.runner", "--loop"]
+    env_file:
+      - .env
+    environment:
+      - LEXWIKI_COMPILER_DB_PATH=/app/data/anylegal_oss.db
+    volumes:
+      - ./data:/app/data
+      - ./logs:/app/logs
+    depends_on:
+      - backend
+    restart: "no"

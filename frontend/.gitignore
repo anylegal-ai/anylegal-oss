@@ -1,0 +1,12 @@
+.env
+.env.local
+.env.production
+.env*.local
+node_modules/
+.next/
+out/
+nul
+next-env.d.ts
+
+# TypeScript incremental build cache (regenerated on every build)
+tsconfig.tsbuildinfo

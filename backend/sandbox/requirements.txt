@@ -1,0 +1,32 @@
+# Anylegal Sandbox — pre-installed libraries for run_python tool
+# These are available inside the sandbox container at runtime.
+
+# Document manipulation
+python-docx>=0.8.11
+openpyxl>=3.1.0
+python-pptx>=0.6.21
+lxml>=4.9.0
+
+# Data analysis
+pandas>=2.0.0
+tabulate>=0.9.0
+
+# Date/time calculations
+python-dateutil>=2.8.0
+
+# Visualization
+matplotlib>=3.7.0
+Pillow>=10.0.0
+
+# PDF
+reportlab>=4.0.0
+pymupdf4llm>=0.0.25
+
+# Text processing
+regex>=2023.0.0
+
+# Serialization
+pyyaml>=6.0.0
+
+# Safe XML parsing
+defusedxml>=0.7.0

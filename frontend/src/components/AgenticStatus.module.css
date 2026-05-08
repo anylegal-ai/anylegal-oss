@@ -1,0 +1,598 @@
+/* AgenticStatus - Real-time "Watch it Work" UI */
+
+.container {
+  background: var(--background-secondary, #f8f9fa);
+  border: 1px solid var(--border-color, #e1e4e8);
+  border-radius: 8px;
+  margin: 8px 0;
+  overflow: hidden;
+  transition: all 0.2s ease;
+  max-height: 400px;
+  display: flex;
+  flex-direction: column;
+}
+
+.container.active {
+  border-color: var(--accent-color, #0066cc);
+  box-shadow: 0 0 0 1px var(--accent-color, #0066cc);
+}
+
+.container.collapsed {
+  background: var(--background-primary, #ffffff);
+}
+
+/* Header */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 12px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.header:hover {
+  background: var(--background-hover, rgba(0, 0, 0, 0.03));
+}
+
+.headerLeft {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.headerRight {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Status dot */
+.statusDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--text-muted, #6a737d);
+}
+
+.statusDot.connecting,
+.statusDot.running {
+  background: var(--color-warning, #f0ad4e);
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.statusDot.executing_tool {
+  background: var(--accent-color, #0066cc);
+  animation: pulse 0.8s ease-in-out infinite;
+}
+
+.statusDot.completed {
+  background: var(--color-success, #28a745);
+}
+
+.statusDot.error {
+  background: var(--color-error, #dc3545);
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(1.1); }
+}
+
+.statusText {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-primary, #24292e);
+}
+
+.spinner {
+  width: 14px;
+  height: 14px;
+  border: 2px solid var(--border-color, #e1e4e8);
+  border-top-color: var(--accent-color, #0066cc);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.toolCount {
+  font-size: 12px;
+  color: var(--text-muted, #6a737d);
+}
+
+.cancelButton {
+  padding: 4px 10px;
+  font-size: 12px;
+  background: var(--color-error, #dc3545);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.cancelButton:hover {
+  background: #c82333;
+}
+
+.collapseIcon {
+  font-size: 10px;
+  color: var(--text-muted, #6a737d);
+}
+
+/* Content */
+.content {
+  padding: 0 12px 12px;
+  overflow-y: auto;
+  flex: 1;
+  min-height: 0;
+}
+
+/* Error */
+.error {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 10px 12px;
+  background: rgba(220, 53, 69, 0.1);
+  border-radius: 4px;
+  margin-bottom: 12px;
+}
+
+.errorIcon {
+  flex-shrink: 0;
+}
+
+.error span:last-child {
+  font-size: 13px;
+  color: var(--color-error, #dc3545);
+}
+
+/* Thinking/reasoning section */
+.thinkingSection {
+  margin-bottom: 12px;
+  background: rgba(102, 126, 234, 0.08);
+  border-radius: 6px;
+  border-left: 3px solid var(--accent-color, #667eea);
+  overflow: hidden;
+}
+
+.thinkingSection.collapsed {
+  /* Keep minimal styling when collapsed */
+}
+
+.thinkingSection.expanded {
+  /* Full styling when expanded */
+}
+
+.thinkingSectionHeader {
+  padding: 10px 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  user-select: none;
+  transition: background-color 0.15s ease;
+}
+
+.thinkingSectionHeader:hover {
+  background: rgba(102, 126, 234, 0.12);
+}
+
+.thinkingToggle {
+  font-size: 11px;
+  font-weight: normal;
+  color: var(--text-tertiary, #8b949e);
+  margin-left: 8px;
+  opacity: 0.8;
+}
+
+.thinkingSectionHeader:hover .thinkingToggle {
+  opacity: 1;
+}
+
+.thinkingContent {
+  font-size: 13px;
+  font-style: italic;
+  color: var(--text-secondary, #586069);
+  line-height: 1.5;
+  white-space: pre-wrap;
+  word-break: break-word;
+  padding: 0 12px 12px 12px;
+  margin-top: -4px;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+/* Tool calls section */
+.toolCallsSection {
+  margin-top: 8px;
+}
+
+.sectionTitle {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--text-muted, #6a737d);
+  margin-bottom: 8px;
+}
+
+.toolCalls {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* Tool call */
+.toolCall {
+  background: var(--background-primary, #ffffff);
+  border: 1px solid var(--border-color, #e1e4e8);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.toolCall.success {
+  border-left: 3px solid var(--color-success, #28a745);
+}
+
+.toolCall.failed {
+  border-left: 3px solid var(--color-error, #dc3545);
+}
+
+.toolCall.pending {
+  border-left: 3px solid var(--color-warning, #f0ad4e);
+}
+
+.toolCallHeader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  cursor: pointer;
+}
+
+.toolCallHeader:hover {
+  background: var(--background-hover, rgba(0, 0, 0, 0.02));
+}
+
+.stepNumber {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  border-radius: 50%;
+  background: var(--border-color, #e1e4e8);
+  color: var(--text-secondary, #586069);
+}
+
+.success .stepNumber {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.failed .stepNumber {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+.pending .stepNumber {
+  background: #dbeafe;
+  color: #2563eb;
+}
+
+.toolIcon {
+  font-size: 14px;
+}
+
+.toolName {
+  flex: 1;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-primary, #24292e);
+}
+
+.toolCategory {
+  font-size: 10px;
+  padding: 2px 6px;
+  background: var(--background-secondary, #f1f3f5);
+  border-radius: 10px;
+  color: var(--text-muted, #6a737d);
+}
+
+.toolStatus {
+  font-size: 14px;
+}
+
+.toolSpinner {
+  width: 12px;
+  height: 12px;
+  border: 2px solid var(--border-color, #e1e4e8);
+  border-top-color: var(--accent-color, #0066cc);
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+}
+
+.expandIcon {
+  font-size: 12px;
+  color: var(--text-muted, #6a737d);
+  width: 16px;
+  text-align: center;
+}
+
+/* Tool summary (collapsed view) */
+.toolSummary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 4px 10px 8px 32px;
+  font-size: 12px;
+}
+
+.argsSummary {
+  color: var(--text-secondary, #586069);
+  font-style: italic;
+}
+
+.resultSummary {
+  color: var(--text-muted, #6a737d);
+}
+
+/* Tool call details (expanded view) */
+.toolCallDetails {
+  padding: 0 10px 10px;
+  border-top: 1px solid var(--border-color, #e1e4e8);
+}
+
+/* Friendly summary section */
+.friendlySummary {
+  padding: 8px 0;
+  font-size: 13px;
+  color: var(--text-secondary, #586069);
+}
+
+.friendlySummary .resultText {
+  margin-top: 4px;
+  font-weight: 500;
+  color: var(--text-primary, #24292e);
+}
+
+/* Technical details (collapsed by default) */
+.technicalDetails {
+  margin-top: 8px;
+  border: 1px solid var(--border-color, #e1e4e8);
+  border-radius: 4px;
+}
+
+.technicalSummary {
+  font-size: 11px;
+  padding: 6px 8px;
+  cursor: pointer;
+  color: var(--text-muted, #6a737d);
+  background: var(--background-secondary, #f6f8fa);
+}
+
+.technicalSummary:hover {
+  background: var(--background-hover, #e1e4e8);
+}
+
+.detailSection {
+  margin-top: 8px;
+}
+
+.detailLabel {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-muted, #6a737d);
+  margin-bottom: 4px;
+}
+
+.detailCode {
+  font-family: 'SF Mono', Monaco, 'Cascadia Code', monospace;
+  font-size: 11px;
+  background: var(--background-code, #f6f8fa);
+  padding: 8px;
+  border-radius: 4px;
+  overflow-x: auto;
+  max-height: 200px;
+  overflow-y: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.resultError {
+  font-size: 12px;
+  color: var(--color-error, #dc3545);
+  padding: 8px;
+  background: rgba(220, 53, 69, 0.1);
+  border-radius: 4px;
+}
+
+/* Session summary */
+.sessionSummary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding: 10px 12px;
+  background: rgba(40, 167, 69, 0.1);
+  border-radius: 4px;
+  margin-top: 12px;
+}
+
+.summaryItem {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.summaryLabel {
+  font-size: 12px;
+  color: var(--text-muted, #6a737d);
+}
+
+.summaryValue {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-primary, #24292e);
+}
+
+/* Response section - shown when agentic loop completes */
+.responseSection {
+  margin-top: 12px;
+  padding: 12px;
+  background: var(--background-primary, #ffffff);
+  border: 1px solid var(--border-color, #e1e4e8);
+  border-left: 3px solid var(--color-success, #28a745);
+  border-radius: 6px;
+}
+
+.responseContent {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text-primary, #24292e);
+  word-break: break-word;
+}
+
+/* Markdown rendering in response */
+.responseContent h1,
+.responseContent h2,
+.responseContent h3 {
+  margin-top: 16px;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: var(--text-primary, #24292e);
+}
+
+.responseContent h1 { font-size: 18px; }
+.responseContent h2 { font-size: 16px; }
+.responseContent h3 { font-size: 14px; }
+
+.responseContent p {
+  margin: 8px 0;
+}
+
+.responseContent ul,
+.responseContent ol {
+  margin: 8px 0;
+  padding-left: 20px;
+}
+
+.responseContent li {
+  margin: 4px 0;
+}
+
+.responseContent code {
+  background: var(--background-code, #f6f8fa);
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-family: 'SF Mono', Monaco, 'Cascadia Code', monospace;
+  font-size: 12px;
+}
+
+.responseContent pre {
+  background: var(--background-code, #f6f8fa);
+  padding: 12px;
+  border-radius: 6px;
+  overflow-x: auto;
+  margin: 8px 0;
+}
+
+.responseContent pre code {
+  background: transparent;
+  padding: 0;
+}
+
+.responseContent table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 12px 0;
+  font-size: 13px;
+}
+
+.responseContent th,
+.responseContent td {
+  padding: 8px 12px;
+  border: 1px solid var(--border-color, #e1e4e8);
+  text-align: left;
+}
+
+.responseContent th {
+  background: var(--background-secondary, #f6f8fa);
+  font-weight: 600;
+}
+
+.responseContent blockquote {
+  margin: 8px 0;
+  padding: 8px 16px;
+  border-left: 3px solid var(--border-color, #e1e4e8);
+  background: var(--background-secondary, #f6f8fa);
+  color: var(--text-secondary, #586069);
+}
+
+.responseContent hr {
+  margin: 16px 0;
+  border: none;
+  border-top: 1px solid var(--border-color, #e1e4e8);
+}
+
+.responseContent strong {
+  font-weight: 600;
+}
+
+/* Streaming indicator */
+.responseSection.streaming {
+  border-color: var(--accent-color, #667eea);
+  box-shadow: 0 0 8px rgba(102, 126, 234, 0.2);
+}
+
+.streamingIndicator {
+  color: var(--accent-color, #667eea);
+  animation: pulse 1.5s ease-in-out infinite;
+  margin-left: 8px;
+  font-size: 10px;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+
+.streamingCursor {
+  display: inline-block;
+  animation: blink 1s step-start infinite;
+  color: var(--accent-color, #667eea);
+  font-weight: bold;
+}
+
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+/* Open Document button */
+.openDocBtn {
+  padding: 2px 8px;
+  font-size: 11px;
+  font-weight: 500;
+  color: #1971c2;
+  background: #e7f5ff;
+  border: 1px solid #a5d8ff;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-left: 8px;
+  transition: all 0.15s ease;
+}
+
+.openDocBtn:hover {
+  background: #d0ebff;
+  border-color: #74c0fc;
+}
+
+.openDocBtn:active {
+  background: #a5d8ff;
+}

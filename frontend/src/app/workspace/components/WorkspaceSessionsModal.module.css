@@ -1,0 +1,410 @@
+/* WorkspaceSessionsModal - Modal for viewing and managing workspace sessions */
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.modal {
+  background: #ffffff;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 900px;
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+}
+
+/* Header */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid #e5e7eb;
+  flex-shrink: 0;
+}
+
+.title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.title svg {
+  color: #0099FF;
+}
+
+.closeBtn {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  background: transparent;
+  border: none;
+  color: #6b7280;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.closeBtn:hover {
+  background: #f3f4f6;
+  color: #1f2937;
+}
+
+/* Search */
+.searchContainer {
+  position: relative;
+  padding: 12px 20px;
+  border-bottom: 1px solid #e5e7eb;
+  flex-shrink: 0;
+}
+
+.searchInput {
+  width: 100%;
+  padding: 10px 12px 10px 36px;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+  background: #f9fafb;
+  font-size: 0.875rem;
+  color: #1f2937;
+  transition: all 0.15s;
+}
+
+.searchInput:focus {
+  outline: none;
+  border-color: #0099FF;
+  background: #ffffff;
+  box-shadow: 0 0 0 2px rgba(0, 153, 255, 0.1);
+}
+
+.searchInput::placeholder {
+  color: #9ca3af;
+}
+
+.searchIcon {
+  position: absolute;
+  left: 32px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #9ca3af;
+  pointer-events: none;
+}
+
+/* Content */
+.content {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* Sessions List */
+.sessionsList {
+  width: 280px;
+  border-right: 1px solid #e5e7eb;
+  overflow-y: auto;
+  flex-shrink: 0;
+}
+
+.sessionItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  cursor: pointer;
+  border-bottom: 1px solid #f3f4f6;
+  transition: all 0.15s;
+}
+
+.sessionItem:hover {
+  background: #f9fafb;
+}
+
+.sessionItemActive {
+  background: #eff6ff;
+  border-left: 3px solid #0099FF;
+}
+
+.sessionItemCurrent {
+  background: #f0fdf4;
+}
+
+.sessionInfo {
+  flex: 1;
+  min-width: 0;
+}
+
+.sessionName {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #1f2937;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sessionMeta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.75rem;
+  color: #9ca3af;
+  margin-top: 2px;
+}
+
+.currentBadge {
+  font-size: 0.65rem;
+  font-weight: 500;
+  padding: 1px 5px;
+  border-radius: 4px;
+  background: #dcfce7;
+  color: #166534;
+}
+
+.deleteBtn {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  background: transparent;
+  border: none;
+  color: #9ca3af;
+  cursor: pointer;
+  opacity: 0;
+  transition: all 0.15s;
+}
+
+.sessionItem:hover .deleteBtn {
+  opacity: 1;
+}
+
+.deleteBtn:hover {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+/* Session Details */
+.sessionDetails {
+  flex: 1;
+  min-width: 0;
+  padding: 16px 20px;
+  overflow-y: auto;
+}
+
+.detailsHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.detailsHeader h3 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.loadSessionBtn {
+  padding: 8px 16px;
+  border-radius: 6px;
+  background: #0099FF;
+  border: none;
+  color: white;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.loadSessionBtn:hover {
+  background: #0088ee;
+}
+
+.documentsList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.emptyDocuments {
+  padding: 40px 20px;
+  text-align: center;
+  color: #9ca3af;
+  font-size: 0.875rem;
+}
+
+/* Empty and Loading States */
+.loading,
+.empty,
+.noSelection,
+.error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  text-align: center;
+  color: #6b7280;
+  gap: 12px;
+}
+
+.loading svg,
+.empty svg,
+.noSelection svg {
+  color: #d1d5db;
+}
+
+.empty p,
+.noSelection p {
+  margin: 0;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #6b7280;
+}
+
+.empty span {
+  font-size: 0.8rem;
+  color: #9ca3af;
+  max-width: 280px;
+}
+
+.spinner {
+  width: 24px;
+  height: 24px;
+  border: 2px solid #e5e7eb;
+  border-top-color: #0099FF;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.error {
+  color: #dc2626;
+}
+
+.error button {
+  padding: 6px 12px;
+  border-radius: 6px;
+  background: #fee2e2;
+  border: none;
+  color: #dc2626;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.error button:hover {
+  background: #fecaca;
+}
+
+/* Delete Confirmation */
+.confirmOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1001;
+}
+
+.confirmDialog {
+  background: white;
+  border-radius: 10px;
+  padding: 24px;
+  max-width: 360px;
+  text-align: center;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+}
+
+.confirmDialog p {
+  margin: 0 0 8px 0;
+  font-size: 0.95rem;
+  color: #1f2937;
+}
+
+.confirmWarning {
+  font-size: 0.8rem !important;
+  color: #9ca3af !important;
+  margin-bottom: 20px !important;
+}
+
+.confirmActions {
+  display: flex;
+  gap: 8px;
+}
+
+.cancelBtn {
+  flex: 1;
+  padding: 10px 16px;
+  border-radius: 6px;
+  background: #f3f4f6;
+  border: none;
+  color: #374151;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.cancelBtn:hover {
+  background: #e5e7eb;
+}
+
+.confirmDeleteBtn {
+  flex: 1;
+  padding: 10px 16px;
+  border-radius: 6px;
+  background: #dc2626;
+  border: none;
+  color: white;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.confirmDeleteBtn:hover {
+  background: #b91c1c;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .modal {
+    max-height: 90vh;
+  }
+  
+  .content {
+    flex-direction: column;
+  }
+  
+  .sessionsList {
+    width: 100%;
+    max-height: 200px;
+    border-right: none;
+    border-bottom: 1px solid #e5e7eb;
+  }
+}
