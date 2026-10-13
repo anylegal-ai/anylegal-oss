@@ -5,7 +5,7 @@
 # Note: this file is informational. The OSS docker-compose stack actually
 # builds the lexwiki-compiler service from the same image as the main
 # backend (see docker-compose.yml), which installs from
-# backend/requirements.txt — that file pins `lexwiki @ git+…@v0.1.0`,
+# backend/requirements.txt — that file pins `lexwiki @ git+…@v0.2.0`,
 # so the compiler's deferred `from lexwiki.compile.compiler import …`
 # imports work out of the box. Runner verifies the import at boot and
 # self-disables cleanly if it ever fails.

@@ -51,7 +51,7 @@ ddgs                    # DuckDuckGo search (rebrand of duckduckgo-search)
 # ── LexWiki compiler ──────────────────────────────────────────────
 # Workspace knowledge-base sidecar deps. Installed from GitHub; not on
 # PyPI yet. Pinned tag — bump explicitly with new releases.
-lexwiki @ git+https://github.com/wouldbe12/lexwiki@v0.1.0
+lexwiki @ git+https://github.com/wouldbe12/lexwiki@v0.2.0
 
 # ── Runtime metrics / housekeeping ────────────────────────────────
 psutil
